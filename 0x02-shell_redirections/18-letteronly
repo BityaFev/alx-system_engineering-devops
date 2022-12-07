@@ -1,0 +1,3 @@
+#!/bin/bash
+egrep ^[[:alpha:]]
+/tec/ssh/sshd_config
