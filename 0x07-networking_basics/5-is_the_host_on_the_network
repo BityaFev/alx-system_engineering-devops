@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Pings an IP address received as an argument 5 times.
 
-if [ $# -ne 1 ]
-then
+if [ $# -ne 1 ]; then
     echo "Usage: $0 {IP_ADDRESS}"
-else
-    ping -c 5 "$1"
+    exit 1
 fi
+
+ping -c 5 "$1" | awk -F'[= ]' '/^64 bytes from/ {print $2 " bytes from " $4 " icmp_seq=" $6}' && ping -c 5 "$1" | tail -n 1 | awk -F'[ /]' '{print "rtt min/avg/max/mdev = " $4 "/" $5 "/" $6 "/" $7 " " $8}'
